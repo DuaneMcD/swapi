@@ -20,11 +20,11 @@ export const SwapiTable = () => {
         let cleanData = response.data.results.map(async character => {
           return {
             ...character,
-            height: handleHeight(character.height),
-            mass: handleMass(character.mass),
-            birth_year: handleBirthYear(character.birth_year),
+            height: sanitize(character.height, 'cm'),
+            mass: sanitize(character.mass, 'kg'),
+            birth_year: sanitize(character.birth_year),
             gender: handleGender(character.gender),
-            homeworld: await handleEndpoints(character.homeworld),
+            homeworld: sanitize(await handleEndpoints(character.homeworld)),
             species: handleSpecies(await handleEndpoints(character.species)),
           };
         });
@@ -41,58 +41,19 @@ export const SwapiTable = () => {
     setCharacterData(characters);
   }, [characters]);
 
-  const handleGender = person => {
-    switch (person) {
-      case 'male':
-        return 'Male';
-      case 'female':
-        return 'Female';
-      case 'none':
-      case 'n/a':
-        return 'Droid';
-      case 'hermaphrodite':
-        return 'Hermaphrodite';
-      default:
-        return person.gender;
-    }
-  };
+  const sanitize = (data, unit = '') =>
+    data === 'unknown' ? 'No Record' : data + unit;
+
+  const handleGender = gender =>
+    gender === 'n/a' || gender === 'none'
+      ? 'Droid'
+      : `${gender[0].toUpperCase()}${gender.slice(1)}`;
 
   const handleEndpoints = async props => {
     let result = await Axios.get(`${props}`);
     return Promise.resolve(result.data.name);
   };
-  const handleSpecies = specie => {
-    switch (specie) {
-      case undefined:
-        return 'Human';
-      default:
-        return specie;
-    }
-  };
-  const handleHeight = height => {
-    switch (height) {
-      case 'unknown':
-        return 'No Record';
-      default:
-        return `${height}cm`;
-    }
-  };
-  const handleMass = mass => {
-    switch (mass) {
-      case 'unknown':
-        return 'No Record';
-      default:
-        return `${mass}kg`;
-    }
-  };
-  const handleBirthYear = year => {
-    switch (year) {
-      case 'unknown':
-        return 'No Record';
-      default:
-        return `${year}`;
-    }
-  };
+  const handleSpecies = specie => (specie === undefined ? 'Human' : specie);
 
   const columns = [
     { dataField: 'name', text: 'Name', sort: true },
