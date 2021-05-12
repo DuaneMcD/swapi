@@ -11,12 +11,15 @@ import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
 export const SwapiTable = () => {
   const [characters, setCharacters] = useState([]);
   const [characterData, setCharacterData] = useState(characters);
-  const apiURL = `https://swapi.dev/api/`;
 
   useEffect(() => {
     const fetchCharacters = async () => {
-      for (let i = 1; i < 10; i++) {
-        let response = await Axios(`${apiURL}people/?page=${i}`);
+      let response = await Axios(`https://swapi.dev/api/people/?page=1`);
+      const totalPages = Math.ceil(response.data.count / 10);
+
+      for (let i = 1; i <= totalPages; i++) {
+        let response = await Axios(`https://swapi.dev/api/people/?page=${i}`);
+
         let cleanData = response.data.results.map(async character => {
           return {
             ...character,
