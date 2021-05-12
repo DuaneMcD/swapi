@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
-import { swapiContext } from '../context/Context';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
@@ -10,7 +9,7 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
 
 export const SwapiTable = () => {
-  const { characters, setCharacters } = useContext(swapiContext);
+  const [characters, setCharacters] = useState([]);
   const [characterData, setCharacterData] = useState(characters);
   const apiURL = `https://swapi.dev/api/`;
 
