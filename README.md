@@ -6,7 +6,7 @@ This project is hosted on Heroku [View SWAPI-V](https://swapi-v.herokuapp.com/).
 
 ## Summary
 
-This app was an ejoyable build. I used this platform to inform my React knowledge. In the process I added several npm packages including Bootstrap 5, Chart.js, and poppper. This app pushed me into learning the react context api. I chose context over redux to keep the code as lean as possible.
+SWAPI-V was a very enjoyable build and practice to inform my React knowledge. In the process I added several npm packages including Bootstrap 5, Chart.js, and poppper. This app pushed me into learning the react context api. I chose context over redux to keep the code as lean as possible.
 
 ## Features
 
